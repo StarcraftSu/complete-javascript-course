@@ -9,7 +9,73 @@
 <body>
     <h1>Asynchronous JavaScript</h1>
     <script>
-        
+        // function getRecipe(){
+        //     setTimeout(()=>{
+        //         const recipeId = [123,342,742,941];
+        //         console.log(recipeId);
+
+        //         setTimeout((id)=>{
+        //             console.log(id);
+        //         },1000,recipeId[2])
+        //     },1500)
+        // }
+        // getRecipe();
+
+        const getIDs = new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                // resolve is a function,which can pass the result 
+                // to the next step such as then(res=>{})
+                resolve([123,342,742,941]); 
+                // The reject function will be excuted in the catch block
+                // reject([123,342,742,941]);
+            },1000);
+        });
+
+        const getRecipe = id=>{
+            //There must be a async function under the Promise
+            return new Promise((resolve,reject)=>{
+                //Passing the id into the setTimeout to simulate a
+                //asynchornize function;
+                    setTimeout(id=>{
+                        const recipe = {
+                            title:'pasta',
+                            chief:'su'
+                        }
+                    resolve(`${id}:${recipe.title}${recipe.chief}`);
+                },1500,id);
+            })
+        }
+
+        getIDs
+        .then(ids =>{
+            //return getRecipe(ids[2]);
+            const recipes = [];
+            ids.forEach(id => {
+                getRes(id);
+            });
+
+            console.log(recipes);
+        })
+        .catch(err=>{
+            console.log('reject');
+            console.log(err);
+        })
+
+        async function getRes(id){
+            const recipe = await getRecipe(id);
+            console.log(recipe);
+        }
+        //北京 ID 2151330
+        //api https://www.metaweather.com/api/location
+        const id_beijing = 2151330;
+        fetch(`https://crossorigin.me/https://www.metaweather.com/api/location/${id_beijing}/`)
+        .then(res=>{
+            console.log(res);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+
     </script>
 </body>
 </html>
