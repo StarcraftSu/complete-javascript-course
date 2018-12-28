@@ -3,17 +3,19 @@ const copyHtml = require('html-webpack-plugin');
 module.exports = {
     entry:'./src/js/index.js',
     module: {
-    rules: [
-        // {
-        //     test: /\.tsx?$/,
-        //     use: 'ts-loader',
-        //     exclude: /node_modules/
-        // }
-    ]
+        rules: [
+            {
+            test: /\.m?js$/,
+            exclude: /node_modules/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env']
+                }
+            }
+            }
+        ]
     },
-    // resolve: {
-    //     extensions: [ '.tsx', '.ts', '.js' ]
-    // },
     output: {
         filename: 'js/bundle.js',
         path: path.resolve(__dirname, './dist')
