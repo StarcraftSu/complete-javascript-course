@@ -1,7 +1,7 @@
 const path = require('path');
-
+const copyHtml = require('html-webpack-plugin');
 module.exports = {
-    entry:'./src/js/index.ts',
+    entry:'./src/js/index.js',
     module: {
     rules: [
         // {
@@ -20,5 +20,11 @@ module.exports = {
     },
     devServer:{
         contentBase:'./dist'
-    }
+    },
+    plugins:[
+        new copyHtml({
+            filename:'index.html',
+            template:'./src/index.html'
+        })
+    ]
 };
