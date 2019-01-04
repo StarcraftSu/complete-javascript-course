@@ -10,7 +10,9 @@ module.exports = {
             use: {
                 loader: 'babel-loader',
                 options: {
-                    presets: ['@babel/preset-env']
+                    presets: ['@babel/preset-env'],
+                    //解决async函数的BUG 需要安装babel-runtime作为依赖
+                    plugins: ['@babel/plugin-transform-runtime']
                 }
             }
             }
